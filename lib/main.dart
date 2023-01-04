@@ -166,7 +166,8 @@ class _MyHomePageState extends State<MyHomePage>
                             selectedIndex = index;
                           });
                         },
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 700),
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: index == 0
@@ -422,148 +423,260 @@ class TabView extends StatelessWidget {
             style: Theme.of(context).textTheme.headline4,
           ),
         ),
-        Stack(
-          children: [
-            Column(
+        if (screenWidth > 500)
+          Stack(
+            children: [
+              Column(
+                children: [
+                  ...data.sections.mapIndexed(
+                    (i, e) {
+                      final index = i + 1;
+                      return LayoutBuilder(builder: (context, c) {
+                        return Column(
+                          children: [
+                            if (index != 2)
+                              SizedBox(height: screenWidth > 760 ? 100 : 40)
+                            else
+                              SizedBox(height: screenWidth > 760 ? 150 : 60),
+                            ClipPath(
+                              // clipper: index.isEven ? TabSectionClipper() : null,
+                              child: Container(
+                                width: double.infinity,
+                                // height: index.isEven ? 400 : null,
+                                decoration: index.isEven
+                                    ? const BoxDecoration(
+                                        gradient: LinearGradient(
+                                          colors: [
+                                            Color(0xffE6FFFA),
+                                            Color(0xffEBF4FF),
+                                          ],
+                                        ),
+                                      )
+                                    : null,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    if (index.isEven) ...[
+                                      _buildImage(screenWidth, e),
+                                      const SizedBox(width: 70),
+                                    ],
+                                    SizedBox(
+                                      width: screenWidth > 760
+                                          ? 500
+                                          : screenWidth * .5,
+                                      child: Stack(
+                                        clipBehavior: Clip.none,
+                                        children: [
+                                          SizedBox(
+                                            height: 260,
+                                            width: 385,
+                                            child: CircleAvatar(
+                                              radius: 80,
+                                              backgroundColor: i.isEven
+                                                  ? AppColors.lightColor
+                                                      .backgroundColor
+                                                  : Colors.transparent,
+                                            ),
+                                          ),
+                                          Positioned(
+                                            bottom: (screenWidth > 760
+                                                    ? 260
+                                                    : screenWidth * .2) /
+                                                2,
+                                            left: (screenWidth > 760
+                                                    ? 260
+                                                    : screenWidth * .2) /
+                                                2,
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.end,
+                                              children: [
+                                                Text(
+                                                  "$index.",
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .headline2
+                                                      ?.copyWith(
+                                                        color: AppColors
+                                                                .themedColor(
+                                                                    context)
+                                                            .textColor1,
+                                                        height: .5,
+                                                      ),
+                                                ),
+                                                const SizedBox(width: 10),
+                                                Flexible(
+                                                  child: Text(
+                                                    e.title,
+                                                    maxLines: 2,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline6
+                                                        ?.copyWith(
+                                                            color: AppColors
+                                                                    .themedColor(
+                                                                        context)
+                                                                .textColor1),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                    if (index.isOdd) ...[
+                                      const SizedBox(width: 70),
+                                      _buildImage(screenWidth, e),
+                                    ]
+                                  ],
+                                ),
+                              ),
+                            ),
+                            if (index != 2)
+                              SizedBox(height: screenWidth > 760 ? 100 : 40)
+                            else
+                              SizedBox(height: screenWidth > 760 ? 50 : 20)
+                          ],
+                        );
+                      });
+                    },
+                  ),
+                ],
+              ),
+              if (screenWidth > 760)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  top: 300,
+                  child: SvgPicture.asset(
+                    R.ASSETS_SVG_ARROW_RIGHT_SVG,
+                  ),
+                ),
+              if (screenWidth > 760)
+                Positioned(
+                  left: 0,
+                  right: 0,
+                  bottom: 300,
+                  child: SvgPicture.asset(
+                    R.ASSETS_SVG_ARROW_LEFT_SVG,
+                  ),
+                ),
+            ],
+          )
+        else
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
               children: [
                 ...data.sections.mapIndexed(
                   (i, e) {
                     final index = i + 1;
-                    return LayoutBuilder(builder: (context, c) {
-                      return Column(
-                        children: [
-                          if (index != 2)
-                            SizedBox(height: screenWidth > 760 ? 100 : 40)
-                          else
-                            SizedBox(height: screenWidth > 760 ? 150 : 60),
-                          ClipPath(
-                            // clipper: index.isEven ? TabSectionClipper() : null,
-                            child: Container(
-                              width: double.infinity,
-                              // height: index.isEven ? 400 : null,
-                              decoration: index.isEven
-                                  ? const BoxDecoration(
-                                      gradient: LinearGradient(
-                                        colors: [
-                                          Color(0xffE6FFFA),
-                                          Color(0xffEBF4FF),
+                    return Column(
+                      children: [
+                        Container(
+                          decoration: index.isEven
+                              ? const BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Color(0xffE6FFFA),
+                                      Color(0xffEBF4FF),
+                                    ],
+                                  ),
+                                )
+                              : null,
+                          child: SizedBox(
+                            height: 450,
+                            width: MediaQuery.of(context).size.width,
+                            child: Stack(
+                              children: [
+                                Positioned(
+                                  bottom: index == 1 ? 0 : null,
+                                  top: index == 1 ? null : 60,
+                                  left: i * 30,
+                                  child: Stack(
+                                    clipBehavior: Clip.none,
+                                    children: [
+                                      if (index.isOdd)
+                                        Positioned(
+                                          top: -60,
+                                          left: -125,
+                                          child: SizedBox(
+                                            height: 260,
+                                            width: 385,
+                                            child: CircleAvatar(
+                                              radius: 80,
+                                              backgroundColor: i.isEven
+                                                  ? AppColors.lightColor
+                                                      .backgroundColor
+                                                  : Colors.transparent,
+                                            ),
+                                          ),
+                                        ),
+                                      Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.end,
+                                        children: [
+                                          Text(
+                                            "$index.",
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .headline2
+                                                ?.copyWith(
+                                                  color: AppColors.themedColor(
+                                                          context)
+                                                      .textColor3,
+                                                  fontSize: 120,
+                                                  height: .1,
+                                                ),
+                                          ),
+                                          const SizedBox(width: 20),
+                                          SizedBox(
+                                            width: 300,
+                                            child: Text(
+                                              e.title,
+                                              style: Theme.of(context)
+                                                  .textTheme
+                                                  .headline6
+                                                  ?.copyWith(
+                                                    color:
+                                                        AppColors.themedColor(
+                                                                context)
+                                                            .textColor3,
+                                                  ),
+                                            ),
+                                          ),
                                         ],
                                       ),
-                                    )
-                                  : null,
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  if (index.isEven) ...[
-                                    _buildImage(screenWidth, e),
-                                    const SizedBox(width: 70),
-                                  ],
-                                  SizedBox(
-                                    width: screenWidth > 760
-                                        ? 500
-                                        : screenWidth * .5,
-                                    child: Stack(
-                                      clipBehavior: Clip.none,
-                                      children: [
-                                        SizedBox(
-                                          height: 260,
-                                          width: 385,
-                                          child: CircleAvatar(
-                                            radius: 80,
-                                            backgroundColor: i.isEven
-                                                ? AppColors
-                                                    .lightColor.backgroundColor
-                                                : Colors.transparent,
-                                          ),
-                                        ),
-                                        Positioned(
-                                          bottom: (screenWidth > 760
-                                                  ? 260
-                                                  : screenWidth * .2) /
-                                              2,
-                                          left: (screenWidth > 760
-                                                  ? 260
-                                                  : screenWidth * .2) /
-                                              2,
-                                          child: Row(
-                                            mainAxisSize: MainAxisSize.min,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.end,
-                                            children: [
-                                              Text(
-                                                "$index.",
-                                                style: Theme.of(context)
-                                                    .textTheme
-                                                    .headline2
-                                                    ?.copyWith(
-                                                      color:
-                                                          AppColors.themedColor(
-                                                                  context)
-                                                              .textColor1,
-                                                      height: .5,
-                                                    ),
-                                              ),
-                                              const SizedBox(width: 10),
-                                              Flexible(
-                                                child: Text(
-                                                  e.title,
-                                                  maxLines: 2,
-                                                  style: Theme.of(context)
-                                                      .textTheme
-                                                      .headline6
-                                                      ?.copyWith(
-                                                          color: AppColors
-                                                                  .themedColor(
-                                                                      context)
-                                                              .textColor1),
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
+                                    ],
+                                  ),
+                                ),
+                                Positioned(
+                                  left: 60,
+                                  bottom: index == 1 ? 80 : 0,
+                                  child: SizedBox(
+                                    width: screenWidth * .8,
+                                    child: SvgPicture.asset(
+                                      e.asset,
+                                      fit: BoxFit.fitWidth,
                                     ),
                                   ),
-                                  if (index.isOdd) ...[
-                                    const SizedBox(width: 70),
-                                    _buildImage(screenWidth, e),
-                                  ]
-                                ],
-                              ),
+                                ),
+                              ],
                             ),
                           ),
-                          if (index != 2)
-                            SizedBox(height: screenWidth > 760 ? 100 : 40)
-                          else
-                            SizedBox(height: screenWidth > 760 ? 50 : 20)
-                        ],
-                      );
-                    });
+                        ),
+                        const SizedBox(height: 100),
+                      ],
+                    );
                   },
                 ),
               ],
             ),
-            if (screenWidth > 760)
-              Positioned(
-                left: 0,
-                right: 0,
-                top: 300,
-                child: SvgPicture.asset(
-                  R.ASSETS_SVG_ARROW_RIGHT_SVG,
-                ),
-              ),
-            if (screenWidth > 760)
-              Positioned(
-                left: 0,
-                right: 0,
-                bottom: 300,
-                child: SvgPicture.asset(
-                  R.ASSETS_SVG_ARROW_LEFT_SVG,
-                ),
-              ),
-          ],
-        )
+          ),
       ],
     );
   }

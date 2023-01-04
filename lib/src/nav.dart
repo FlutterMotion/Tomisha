@@ -57,14 +57,23 @@ class _NavBarState extends State<NavBar> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
-          if (showRegisterButton) ...[
-            const Text('Jetzt Klicken'),
-            const SizedBox(width: 25),
-            OutlinedButton(
-              onPressed: () {},
-              child: const Text("Kostenlos Registrieren"),
-            ),
-          ],
+          AnimatedSwitcher(
+            duration: const Duration(seconds: 2),
+            child: showRegisterButton
+                ? Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Text('Jetzt Klicken'),
+                      const SizedBox(width: 25),
+                      OutlinedButton(
+                        onPressed: () {},
+                        child: const Text("Kostenlos Registrieren"),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
+          ),
           TextButton(
             onPressed: () {},
             child: const Text("Login"),
