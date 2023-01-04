@@ -22,7 +22,10 @@ class _NavBarState extends State<NavBar> {
   void initState() {
     widget.scrollController?.addListener(() {
       final offset = widget.scrollController?.offset ?? 0;
-      if (offset > 500) {
+      final isMobile = MediaQuery.of(context).size.width <= 500;
+
+      // the position of register button on desktop and mobile are different
+      if (offset > (isMobile ? 530 : 420)) {
         if (!showRegisterButton) setState(() => showRegisterButton = true);
       } else {
         if (showRegisterButton) setState(() => showRegisterButton = false);

@@ -100,91 +100,85 @@ class RegisterComponent extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     if (screenWidth > 500) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
-        child: LayoutBuilder(
-          builder: (context, constraints) {
-            return ClipPath(
-              clipper: DiagonalPathClipperOne(),
-              child: Container(
-                height: 600.37,
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color(0xffEBF4FF),
-                      Color(0xffE6FFFA),
-                    ],
-                  ),
-                ),
-                child: Row(
+      return ClipPath(
+        clipper: DiagonalPathClipperOne(),
+        child: Container(
+          height: 600.37,
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          width: double.infinity,
+          decoration: const BoxDecoration(
+            gradient: LinearGradient(
+              colors: [
+                Color(0xffEBF4FF),
+                Color(0xffE6FFFA),
+              ],
+            ),
+          ),
+          child: LayoutBuilder(builder: (context, constraints) {
+            return Row(
+              mainAxisSize: MainAxisSize.min,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Spacer(flex: 1),
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    const Spacer(flex: 1),
-                    Row(
-                      mainAxisSize: MainAxisSize.min,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Container(
-                          constraints: BoxConstraints(
-                              maxWidth: constraints.maxWidth > 800
-                                  ? 320
-                                  : constraints.maxWidth / 2 - 20,
-                              minWidth: 20),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            crossAxisAlignment: CrossAxisAlignment.stretch,
-                            children: [
-                              Text(
-                                "Deine Job website",
-                                style: Theme.of(context)
-                                    .textTheme
-                                    .headline2
-                                    ?.copyWith(
+                    Container(
+                      constraints: BoxConstraints(
+                          maxWidth: constraints.maxWidth > 800
+                              ? 320
+                              : constraints.maxWidth / 2 - 20,
+                          minWidth: 20),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          Text(
+                            "Deine Job website",
+                            style:
+                                Theme.of(context).textTheme.headline2?.copyWith(
                                       color: AppColors.lightColor.textColor1,
                                     ),
-                              ),
-                              const SizedBox(height: 65),
-                              FilledButton(
-                                buttonText: "Kostenlos Registrieren",
-                                onPressed: () {},
-                                gradientColors: [
-                                  AppColors.lightColor.primary1,
-                                  AppColors.lightColor.appBlue,
-                                ],
-                              ),
+                          ),
+                          const SizedBox(height: 65),
+                          FilledButton(
+                            buttonText: "Kostenlos Registrieren",
+                            onPressed: () {},
+                            gradientColors: [
+                              AppColors.lightColor.primary1,
+                              AppColors.lightColor.appBlue,
                             ],
                           ),
-                        ),
-                        SizedBox(width: constraints.maxWidth > 800 ? 65 : 10),
-                        Container(
-                          constraints: BoxConstraints(
-                            maxHeight: constraints.maxWidth > 800
-                                ? 400
-                                : constraints.maxWidth / 2 - 20,
-                          ),
-                          child: ClipOval(
-                            child: AspectRatio(
-                              aspectRatio: 1,
-                              child: Container(
-                                color: Colors.white,
-                                child: SvgPicture.asset(
-                                  R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
-                                  fit: BoxFit.fitWidth,
-                                ),
-                              ),
+                        ],
+                      ),
+                    ),
+                    SizedBox(width: constraints.maxWidth > 800 ? 65 : 10),
+                    Container(
+                      constraints: BoxConstraints(
+                        maxHeight: constraints.maxWidth > 800
+                            ? 400
+                            : constraints.maxWidth / 2 - 20,
+                      ),
+                      child: ClipOval(
+                        child: AspectRatio(
+                          aspectRatio: 1,
+                          child: Container(
+                            color: Colors.white,
+                            child: SvgPicture.asset(
+                              R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
+                              fit: BoxFit.fitWidth,
                             ),
                           ),
                         ),
-                      ],
+                      ),
                     ),
-                    const Spacer(flex: 2)
                   ],
                 ),
-              ),
+                const Spacer(flex: 2)
+              ],
             );
-          },
+          }),
         ),
       );
     }
