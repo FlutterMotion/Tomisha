@@ -640,7 +640,7 @@ class TabView extends StatelessWidget {
                                           ),
                                           const SizedBox(width: 20),
                                           SizedBox(
-                                            width: 300,
+                                            width: 250,
                                             child: Text(
                                               e.title,
                                               style: Theme.of(context)
