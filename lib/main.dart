@@ -30,6 +30,14 @@ class MyApp extends StatelessWidget {
             ),
           ),
         ),
+        outlinedButtonTheme: OutlinedButtonThemeData(
+          style: OutlinedButton.styleFrom(
+            foregroundColor: AppColors.lightColor.primary1,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+        ),
       ),
       home: const MyHomePage(title: 'Flutter Demo Home Page'),
     );
@@ -46,192 +54,211 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  late final ScrollController scrollController;
+  @override
+  void initState() {
+    // TODO: implement initState
+    scrollController = ScrollController();
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    scrollController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: NavAppBar(
+        child: NavBar(
+          scrollController: scrollController,
+        ),
+      ),
+      body: SingleChildScrollView(
+        controller: scrollController,
+        child: Column(
+          children: const [
+            RegisterComponent(),
+            SizedBox(height: 1003),
+            SizedBox(height: 1003),
+            SizedBox(height: 1003),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class RegisterComponent extends StatelessWidget {
+  const RegisterComponent({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final screenWidth = MediaQuery.of(context).size.width;
-    return Scaffold(
-      appBar: const NavAppBar(),
-      body: SingleChildScrollView(
-        child: Column(
-          children: [
-            if (screenWidth > 500)
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: LayoutBuilder(
-                  builder: (context, constraints) {
-                    return ClipPath(
-                      clipper: DiagonalPathClipperOne(),
-                      child: Container(
-                        height: 600.37,
-                        width: double.infinity,
-                        decoration: const BoxDecoration(
-                          gradient: LinearGradient(
-                            colors: [
-                              Color(0xffEBF4FF),
-                              Color(0xffE6FFFA),
-                            ],
-                          ),
-                        ),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.min,
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            const Spacer(flex: 1),
-                            Row(
-                              mainAxisSize: MainAxisSize.min,
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Container(
-                                  constraints: BoxConstraints(
-                                      maxWidth: constraints.maxWidth > 800
-                                          ? 320
-                                          : constraints.maxWidth / 2 - 20,
-                                      minWidth: 20),
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.stretch,
-                                    children: [
-                                      Text(
-                                        "Deine Job website",
-                                        style: Theme.of(context)
-                                            .textTheme
-                                            .headline2
-                                            ?.copyWith(
-                                              color: AppColors
-                                                  .lightColor.textColor1,
-                                            ),
-                                      ),
-                                      const SizedBox(height: 65),
-                                      FilledButton(
-                                        buttonText: "Kostenlos Registrieren",
-                                        onPressed: () {},
-                                        gradientColors: [
-                                          AppColors.lightColor.primary1,
-                                          AppColors.lightColor.appBlue,
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                    width:
-                                        constraints.maxWidth > 800 ? 65 : 10),
-                                Container(
-                                  constraints: BoxConstraints(
-                                    maxHeight: constraints.maxWidth > 800
-                                        ? 400
-                                        : constraints.maxWidth / 2 - 20,
-                                  ),
-                                  child: Hero(
-                                    tag: "agreementImage",
-                                    child: ClipOval(
-                                      child: AspectRatio(
-                                        aspectRatio: 1,
-                                        child: Container(
-                                          color: Colors.white,
-                                          child: SvgPicture.asset(
-                                            R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
-                                            fit: BoxFit.fitWidth,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                            const Spacer(flex: 2)
-                          ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              )
-            else
-              Container(
+
+    if (screenWidth > 500) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return ClipPath(
+              clipper: DiagonalPathClipperOne(),
+              child: Container(
+                height: 600.37,
+                width: double.infinity,
                 decoration: const BoxDecoration(
                   gradient: LinearGradient(
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
                     colors: [
                       Color(0xffEBF4FF),
                       Color(0xffE6FFFA),
                     ],
                   ),
                 ),
-                child: Column(
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    Stack(
+                    const Spacer(flex: 1),
+                    Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Hero(
-                          tag: "agreementImage",
-                          child: SvgPicture.asset(
-                            R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
-                            fit: BoxFit.fitWidth,
-                            height: 600,
+                        Container(
+                          constraints: BoxConstraints(
+                              maxWidth: constraints.maxWidth > 800
+                                  ? 320
+                                  : constraints.maxWidth / 2 - 20,
+                              minWidth: 20),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.stretch,
+                            children: [
+                              Text(
+                                "Deine Job website",
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .headline2
+                                    ?.copyWith(
+                                      color: AppColors.lightColor.textColor1,
+                                    ),
+                              ),
+                              const SizedBox(height: 65),
+                              FilledButton(
+                                buttonText: "Kostenlos Registrieren",
+                                onPressed: () {},
+                                gradientColors: [
+                                  AppColors.lightColor.primary1,
+                                  AppColors.lightColor.appBlue,
+                                ],
+                              ),
+                            ],
                           ),
                         ),
-                        Center(
-                          child: Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              "Deine Job website",
-                              textAlign: TextAlign.center,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .headline3
-                                  ?.copyWith(
-                                    color: AppColors.lightColor.textColor1,
-                                  ),
-                            ),
+                        SizedBox(width: constraints.maxWidth > 800 ? 65 : 10),
+                        Container(
+                          constraints: BoxConstraints(
+                            maxHeight: constraints.maxWidth > 800
+                                ? 400
+                                : constraints.maxWidth / 2 - 20,
                           ),
-                        ),
-                        Positioned(
-                          bottom: 0,
-                          left: 0,
-                          right: 0,
-                          child: Container(
-                            height: 128,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              boxShadow: [
-                                BoxShadow(
-                                    color: AppColors.themedColor(context)
-                                        .boxShadow,
-                                    blurRadius: 9,
-                                    spreadRadius: 0,
-                                    offset: Offset(0, -8)),
-                              ],
-                              borderRadius: const BorderRadius.only(
-                                topLeft: Radius.circular(12),
-                                topRight: Radius.circular(12),
+                          child: ClipOval(
+                            child: AspectRatio(
+                              aspectRatio: 1,
+                              child: Container(
+                                color: Colors.white,
+                                child: SvgPicture.asset(
+                                  R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
+                                  fit: BoxFit.fitWidth,
+                                ),
                               ),
                             ),
-                            padding: const EdgeInsets.all(32.0),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
-                              children: [
-                                FilledButton(
-                                  buttonText: "Kostenlos Registrieren",
-                                  onPressed: () {},
-                                  gradientColors: [
-                                    AppColors.lightColor.primary1,
-                                    AppColors.lightColor.appBlue,
-                                  ],
-                                ),
-                              ],
-                            ),
                           ),
-                        )
+                        ),
                       ],
                     ),
+                    const Spacer(flex: 2)
                   ],
                 ),
-              )
+              ),
+            );
+          },
+        ),
+      );
+    }
+    return Container(
+      decoration: const BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Color(0xffEBF4FF),
+            Color(0xffE6FFFA),
           ],
         ),
+      ),
+      child: Column(
+        children: [
+          Stack(
+            children: [
+              SvgPicture.asset(
+                R.ASSETS_SVG_UNDRAW_AGREEMENT_AAJR_SVG,
+                fit: BoxFit.fitWidth,
+                height: 600,
+              ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text(
+                    "Deine Job website",
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.headline3?.copyWith(
+                          color: AppColors.lightColor.textColor1,
+                        ),
+                  ),
+                ),
+              ),
+              Positioned(
+                bottom: 0,
+                left: 0,
+                right: 0,
+                child: Container(
+                  height: 128,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                          color: AppColors.themedColor(context).boxShadow,
+                          blurRadius: 9,
+                          spreadRadius: 0,
+                          offset: Offset(0, -8)),
+                    ],
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                  ),
+                  padding: const EdgeInsets.all(32.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      FilledButton(
+                        buttonText: "Kostenlos Registrieren",
+                        onPressed: () {},
+                        gradientColors: [
+                          AppColors.lightColor.primary1,
+                          AppColors.lightColor.appBlue,
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              )
+            ],
+          ),
+        ],
       ),
     );
   }
