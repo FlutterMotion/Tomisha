@@ -511,19 +511,17 @@ class TabView extends StatelessWidget {
                                                   width: screenWidth > 760
                                                       ? 400
                                                       : 300,
-                                                  child: Flexible(
-                                                    child: Text(
-                                                      e.title,
-                                                      maxLines: 2,
-                                                      style: Theme.of(context)
-                                                          .textTheme
-                                                          .headline6
-                                                          ?.copyWith(
-                                                              color: AppColors
-                                                                      .themedColor(
-                                                                          context)
-                                                                  .textColor1),
-                                                    ),
+                                                  child: Text(
+                                                    e.title,
+                                                    maxLines: 2,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .headline6
+                                                        ?.copyWith(
+                                                            color: AppColors
+                                                                    .themedColor(
+                                                                        context)
+                                                                .textColor1),
                                                   ),
                                                 ),
                                               ],
