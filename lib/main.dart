@@ -142,6 +142,7 @@ class _MyHomePageState extends State<MyHomePage>
   ];
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: NavAppBar(
         child: NavBar(
@@ -192,7 +193,9 @@ class _MyHomePageState extends State<MyHomePage>
                                   : AppColors.lightColor.borderColor,
                             ),
                           ),
-                          padding: const EdgeInsets.all(16),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: screenWidth <= 360 ? 8 : 16,
+                              vertical: 16),
                           child: Text(
                             "Arbeitnehmer",
                             style: GoogleFonts.lato().copyWith(
